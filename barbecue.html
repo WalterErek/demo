@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .counter {
+      display: flex;
+    }
+    .counter span {
+      display: block;
+      width: 20px;
+      line-height: 20px;
+      font-size: 20px;
+      text-align: center;
+    }
+    .active {
+      color: red;
+    }
+  </style>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="app">
+    <div v-show="step === 0">
+      <ul v-for="(item,index) in menu" :key="index">
+        <li :class="{active: activeTabIndex === index}" @click="switchTab(index)">{{item.name}}</li>
+      </ul>
+      <ul v-for="(item,index) in menu" :key="index" v-show="activeTabIndex === index">
+        <li v-for="(subitem, subindex) in item.list" :key="subitem.name">
+          {{subitem.name}} - {{subitem.price}}
+          
+          <div class="counter"><span @click="handleDec(subitem)">-</span>{{subitem.count}}<span @click="handleInc(subitem)">+</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <ul v-for="(item,index) in customerMenu" :key="index" v-show="step === 1">
+      <li>{{item.name}} 单价：{{item.price}} 数量：{{item.count}} 总价：{{item.price * item.count}}</li>
+    </ul>
+
+    <span @click="handlePrev">重新选菜</span>&nbsp;
+    <span @click="handleNext">结算</span>
+
+    <div>价格：{{menuPrice}}</div>
+  </div>
+
+  <script>
+    const menuConfig = [{
+      name: '荤菜系列1',
+      list: [{
+        name: '羊肉串',
+        price: 4,
+        count: 0,
+      },{
+        name: '牛肉串',
+        price: 4,
+        count: 0,
+      }]
+    },{
+      name: '荤菜系列2',
+      list: [{
+        name: '手工肉肠',
+        price: 5,
+        count: 0,
+      },{
+        name: '王中王火腿肠',
+        price: 3,
+        count: 0,
+      },{
+        name: '开花肠',
+        price: 3,
+        count: 0,
+      },{
+        name: '火龙肠',
+        price: 3,
+        count: 0,
+      },{
+        name: '鱿鱼须',
+        price: 4,
+        count: 0,
+      },{
+        name: '鱿鱼片',
+        price: 10,
+        count: 0,
+      }]
+    },{
+      name: '素材系列',
+      list: [{
+        name: '年糕',
+        price: 3,
+        count: 0,
+      },{
+        name: '千叶豆腐',
+        price: 2,
+        count: 0,
+      },{
+        name: '臭豆腐',
+        price: 3,
+        count: 0,
+      },{
+        name: '贡丸',
+        price: 3,
+        count: 0,
+      },{
+        name: '兰花干',
+        price: 2,
+        count: 0,
+      },{
+        name: '香干',
+        price: 2,
+        count: 0,
+      }]
+    }];
+  </script>
+  <script>
+    const app = Vue.createApp({
+      setup(props) {
+        const menu = Vue.reactive(menuConfig);
+        const handleDec = (subitem) => {
+          if(subitem.count <= 0 ) {
+            return;
+          }
+          subitem.count--;
+        };
+        const handleInc = (subitem) => {
+          subitem.count++;
+        };
+
+        const step = Vue.ref(0);
+        const handlePrev = () => {
+          if(step.value > 0) {
+            step.value--;
+          }
+        };
+        const handleNext = () => {
+          if(step.value < 1) {
+            step.value++;
+          }
+        };
+
+        const activeTabIndex = Vue.ref(0);
+        const switchTab = (index) => {
+          activeTabIndex.value = index;
+        };
+
+        const customerMenu = Vue.computed(() => {
+          let menuArr = [];
+          for(item of menu) {
+            const {list} = item;
+            list.forEach((subitem) => {
+              subitem.count > 0 && menuArr.push(subitem);
+            });
+          }
+          return menuArr;
+        });
+
+        const menuPrice = Vue.computed(() => {
+          let lastPrice = 0;
+          // console.log(customerMenu.value);
+          
+          customerMenu.value.forEach(({count, price}) => {
+            lastPrice += count * price;
+          });
+          return lastPrice;
+        });
+
+        return {
+          menu,
+          handleDec,
+          handleInc,
+          customerMenu,
+          menuPrice,
+
+          step,
+          handlePrev,
+          handleNext,
+
+          activeTabIndex,
+          switchTab,
+
+          
+        };
+      }
+    });
+    app.mount('#app');
+
+  </script>
+</body>
+</html>
