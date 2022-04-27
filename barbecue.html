@@ -25,8 +25,8 @@
     }
 
     body {
-      font-size: 14px;
-      padding: 48px 16px;
+      font-size: 15px;
+      padding: 48px 16px 64px;
       -webkit-overflow-scrolling: touch;
       user-select: none;
       -webkit-user-select: none;
@@ -107,6 +107,14 @@
       line-height: 100px;
     }
 
+    .custom {
+      position: fixed;
+      left: 16px;
+      top: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
     .order-head {
       padding: 4px;
       border-bottom: 1px solid #eee;
@@ -130,7 +138,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      height: 48px;
+      height: 64px;
       border-top: 1px solid #eee;
       display: flex;
       justify-content: space-between;
@@ -143,13 +151,24 @@
       line-height: 100%;
     }
     .footer-price {
-      width: 50%;
+      width: 45%;
       border-right: 1px solid #eee;
+      font-size: 18px;
+    }
+    .footer-button {
+      width: 20%;
+      text-align: center;
     }
     .footer-button>span {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       color: #e93030;
+    }
+    .footer-preference {
+      width: 70px;
+    }
+    #preference {
+      font-size: 16px;
     }
     
   </style>
@@ -158,7 +177,7 @@
 <body>
   <div id="app">
     <h1>东门烧烤</h1>
-    <div v-show="step === 0">
+    <section v-show="step === 0">
       <!-- tab区 -->
       <ul class="tab">
         <li class="tab-item" v-for="(item,index) in menu" :key="index" :class="{'tab-item_active': activeTabIndex === index}" @click="switchTab(index)">{{item.name}}</li>
@@ -175,23 +194,39 @@
             <span @click="handleInc(subitem)">+</span></div>
         </li>
       </ul>
-    </div>
+    </section>
 
     <!-- 订单详情 -->
-    <h2 class="order-head" v-show="step === 1">订单详情</h2>
-    <div class="empty" v-if="step === 1 && customerMenu.length === 0">空空如也~</div>
-    <ul v-for="(item,index) in customerMenu" :key="index" v-show="step === 1">
-      <li class="order-item">
-        <div>{{item.name}}</div>
-        <div>单价：{{item.price}}</div>
-        <div>数量：{{item.count}}</div>
-        <div>总价：{{item.price * item.count}}</div>
-      </li>
-    </ul>
+    <section v-show="step === 1">
+      <div class="custom">
+        <div class="user-comment">
+          <textarea name="user-comment" id="user-comment" cols="40" rows="3" placeholder="请填写用户信息和其他的要求～"></textarea>
+        </div>
+      </div>
+      
+      <h2 class="order-head">订单详情</h2>
+      <div class="empty" v-if="customerMenu.length === 0">空空如也~</div>
+      <ul v-for="(item,index) in customerMenu" :key="index">
+        <li class="order-item">
+          <div>{{item.name}}</div>
+          <div style="font-weight:bold;color:#e93030;">数量：{{item.count}}</div>
+          <div>单价：{{item.price}}</div>
+          <div>总价：{{item.price * item.count}}</div>
+        </li>
+      </ul>
+    </section>
 
     <!-- 底部按钮 -->
     <footer>
-      <div class="footer-price">订单价格：￥{{menuPrice}}</div>
+      <div class="footer-price">订单价格：￥<span>{{menuPrice}}</span></div>
+      <div class="footer-preference">
+        <label for="preference">选择辣度</label>&nbsp;
+        <select name="preference" id="preference">
+          <optgroup>
+            <option v-for="item in userPreference" :value="item">{{item}}</option>
+          </optgroup>
+        </select>
+      </div>
       <div class="footer-button">
         <span @click="handlePrev" v-if="step === 1">修改订单</span>
         <span @click="handleNext" v-else>结算</span>
@@ -469,6 +504,9 @@
           return lastPrice;
         });
 
+        // 用户口味偏好
+        const userPreference = ['不辣', '微微辣', '微辣', '中辣', '中辣', '变态辣'];
+
         return {
           menu,
           handleDec,
@@ -482,7 +520,7 @@
 
           activeTabIndex,
           switchTab,
-
+          userPreference,
         };
       }
     });
