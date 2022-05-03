@@ -26,7 +26,6 @@ const onClear = () => {
   <!-- 底部按钮 -->
   <van-submit-bar
     :price="menuPrice * 100"
-    safe-area-inset-bottom
     :decimal-length="0"
     button-text="生成订单"
     @submit="onSubmit"
@@ -43,4 +42,8 @@ const onClear = () => {
   </van-submit-bar>
 </template>
 
-<style scoped></style>
+<style scoped>
+[data-adapter="iphoneAdapter"] .van-submit-bar {
+  padding-bottom: 34px;
+}
+</style>

@@ -74,7 +74,7 @@ const handleHistory = () => {
   }
   try {
     const historyArr = JSON.parse(history);
-    
+
   } catch {}
   // localStorage.removeItem(LS_KEY);
 };
@@ -128,12 +128,15 @@ const handleInc = (subitem: MenuListItem) => {
 <style>
 body {
   font-size: 15px;
-  padding: 0px 16px 64px;
+  padding: 0px 16px 80px;
   -webkit-overflow-scrolling: touch;
   user-select: none;
   -webkit-user-select: none;
 }
 .van-notice-bar {
   margin: 0 -16px;
+}
+[data-adapter="iphoneAdapter"] body{
+  padding-bottom: 114px;
 }
 </style>
