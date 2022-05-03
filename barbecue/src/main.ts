@@ -16,7 +16,8 @@ import {
   RadioGroup,
   Radio,
   Icon,
-  Cell
+  Cell,
+  Toast
 } from "vant";
 
 const app = createApp(App);
@@ -35,6 +36,7 @@ app
   .use(RadioGroup)
   .use(Radio)
   .use(Icon)
-  .use(Cell);
+  .use(Cell)
+  .use(Toast);
 
 app.mount("#app");

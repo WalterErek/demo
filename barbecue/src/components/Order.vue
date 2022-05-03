@@ -4,6 +4,7 @@ import { MenuListItem } from "../App.vue";
 import UserPreference from "../components/UserPreference.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import html2canvas from 'html2canvas';
+import { Toast } from "vant";
 
 const props = defineProps<{ customerMenu: MenuListItem[] }>();
 const emit = defineEmits(["handle-prev"]);
@@ -13,7 +14,12 @@ const isEmpty = computed(() => {
 
 const onScreenshot = () => {
   html2canvas(document.querySelector('#app')!).then(function (canvas) {
-    console.log(canvas.toDataURL("image/jpeg", 0.3));
+    const base64 = canvas.toDataURL("image/jpeg", 0.3);
+    window.clipboard(base64, () => {
+      Toast.success('复制成功，快去粘贴把吧~');
+    }, () => {
+      Toast.fail('复制失败，请自己截图~')
+    });
   });
 };
 </script>
