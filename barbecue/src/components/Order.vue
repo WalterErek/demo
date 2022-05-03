@@ -3,12 +3,25 @@ import { computed } from "vue";
 import { MenuListItem } from "../App.vue";
 import UserPreference from "../components/UserPreference.vue";
 import OrderInfo from "../components/OrderInfo.vue";
+import html2canvas from 'html2canvas';
+import { Toast } from "vant";
 
 const props = defineProps<{ customerMenu: MenuListItem[] }>();
 const emit = defineEmits(["handle-prev"]);
 const isEmpty = computed(() => {
   return props.customerMenu.length === 0;
 });
+
+const onScreenshot = () => {
+  html2canvas(document.querySelector('#app')!).then(function (canvas) {
+    const base64 = canvas.toDataURL("image/jpeg", 0.3);
+    window.clipboard(base64, () => {
+      Toast.success('复制成功，快去粘贴把吧~');
+    }, () => {
+      Toast.fail('复制失败，请自己截图~')
+    });
+  });
+};
 </script>
 ;
 
@@ -17,9 +30,11 @@ const isEmpty = computed(() => {
   <van-nav-bar
     title="订单详情"
     left-text="返回"
+    right-text="生成截图"
     left-arrow
     fixed
     @click-left="$emit('handle-prev')"
+    @click-right="onScreenshot"
   />
 
   <section class="func-zone" v-if="!isEmpty">
@@ -33,7 +48,7 @@ const isEmpty = computed(() => {
   </section>
 
   <!-- 订单明细 -->
-  <h3 v-if="!isEmpty" style="margin-top: 8px;">订单明细</h3>
+  <h3 v-if="!isEmpty" style="margin-top: 8px">订单明细</h3>
 
   <div class="empty" v-if="isEmpty">
     <van-empty description="空空如也~"></van-empty>
