@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "vant": "^3.4.8",
     "vue": "^3.2.25"
   },
