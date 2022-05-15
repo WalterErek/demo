@@ -94,6 +94,7 @@ const onScreenshot = () => {
 #order-res-img img {
   width: 100%;
   border-radius: 8px;
+  display: block;
 }
 
 .cont {

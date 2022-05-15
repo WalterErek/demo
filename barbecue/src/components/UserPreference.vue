@@ -15,7 +15,7 @@ const btnText = computed(() => flavour[sliderValue.value / RANGE * 5]);
 
 <template>
   <div class="user-preference">
-    <van-row justify="space-between" align="center" style="margin: 0 -4px;">
+    <van-row justify="space-between" align="center">
       <van-col span="14">
         <van-icon name="fire" color="#e93030" /> 辣度：<span style="color: #e93030; font-size: 20px;">{{ btnText }}</span>
         <van-slider v-model="sliderValue" active-color="#ee0a24" :step="20"></van-slider>
@@ -24,7 +24,7 @@ const btnText = computed(() => flavour[sliderValue.value / RANGE * 5]);
       <van-col span="8">
         <van-icon name="location" color="#1989fa" /> 取餐方式:
         <van-radio-group v-model="place">
-          <van-radio name="1">送至东门超市</van-radio>
+          <van-radio name="1">送东门超市</van-radio>
           <van-radio name="2">烧烤摊自提</van-radio>
         </van-radio-group>
       </van-col>

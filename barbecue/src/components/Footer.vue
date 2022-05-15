@@ -31,7 +31,7 @@ const onClear = () => {
     @submit="onSubmit"
   >
     <template #tip>
-      <span style="color: #1989fa" @click="onGetHistory">一键导入历史订单</span> &nbsp;
+      <span style="color: #1989fa" @click="onGetHistory">导入上一个历史订单记录</span> &nbsp;
       <span style="color: #e93030" @click="onClear">清空</span>
     </template>
   </van-submit-bar>

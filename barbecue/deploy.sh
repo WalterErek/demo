@@ -1,5 +1,5 @@
 
 npm run build
-mv dist/* ../
+cp -r dist/* ../
 cd ..
 mv index.html barbecue.html
