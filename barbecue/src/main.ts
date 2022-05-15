@@ -17,7 +17,8 @@ import {
   Radio,
   Icon,
   Cell,
-  Toast
+  Toast,
+  Overlay
 } from "vant";
 
 const app = createApp(App);
@@ -37,6 +38,7 @@ app
   .use(Radio)
   .use(Icon)
   .use(Cell)
-  .use(Toast);
+  .use(Toast)
+  .use(Overlay);
 
 app.mount("#app");

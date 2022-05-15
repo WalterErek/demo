@@ -11,6 +11,10 @@ export interface MenuListItem {
   price: number;
   count: number;
 }
+export interface MenuListItemWithIndex extends MenuListItem {
+  index: number;
+  subindex: number;
+}
 export interface MenuItem {
   name: string;
   list: MenuListItem[];
@@ -32,27 +36,32 @@ const handlePrev = () => {
 };
 const handleNext = () => {
   if (step.value < 1) {
+    setHistory();
     step.value++;
   }
 };
-
-const copyMenuConfig = JSON.parse(JSON.stringify(menuConfig));
 
 // 菜单
 let menu: Menu = {
   data: reactive(menuConfig)
 };
+
 // 用户选择的菜单
 const customerMenu = computed(() => {
-  let menuArr: MenuListItem[] = [];
-  for (let item of menu.data) {
+  let menuArr: MenuListItemWithIndex[] = [];
+  menu.data.forEach((item, index) => {
     const { list } = item;
-    list.forEach((subitem: MenuListItem) => {
-      subitem.count > 0 && menuArr.push(subitem);
+    list.forEach((subitem: MenuListItem, subindex) => {
+      subitem.count > 0 && menuArr.push({
+        ...subitem,
+        index,
+        subindex,
+      });
     });
-  }
+  });
   return menuArr;
 });
+
 // 用户菜单汇总信息，价格和总数量
 const menuInfo = computed<MenuInfo>(() => {
   let menuPrice: number = 0;
@@ -67,6 +76,15 @@ const menuInfo = computed<MenuInfo>(() => {
   };
 });
 
+provide("menuInfo", menuInfo);
+
+const setHistory = () => {
+  localStorage.setItem(LS_KEY, JSON.stringify(customerMenu.value));
+};
+const clearHistory = () => {
+  localStorage.removeItem(LS_KEY);
+};
+
 const handleHistory = () => {
   const history = localStorage.getItem(LS_KEY);
   if (!history) {
@@ -74,12 +92,23 @@ const handleHistory = () => {
   }
   try {
     const historyArr = JSON.parse(history);
-
+    historyArr.forEach((item: MenuListItemWithIndex) => {
+      const {
+        index,
+        subindex,
+        name,
+        count
+      } = item;
+      const target = menu.data[index]['list'][subindex];
+      if (target.name === name) {
+        target.count = count;
+      }
+    });
   } catch {}
-  // localStorage.removeItem(LS_KEY);
 };
+
 const handleClear = () => {
-  // menu.data = reactive(copyMenuConfig);
+  clearHistory();
   for (let item of menu.data) {
     const { list } = item;
     list.forEach((subitem: MenuListItem) => {
@@ -87,8 +116,6 @@ const handleClear = () => {
     });
   }
 };
-
-provide("menuInfo", menuInfo);
 
 // 调整数量
 const handleDec = (subitem: MenuListItem) => {
@@ -128,14 +155,12 @@ const handleInc = (subitem: MenuListItem) => {
 <style>
 body {
   font-size: 15px;
-  padding: 0px 16px 80px;
+  padding: 0px 0px 80px;
   -webkit-overflow-scrolling: touch;
   user-select: none;
   -webkit-user-select: none;
 }
-.van-notice-bar {
-  margin: 0 -16px;
-}
+
 [data-adapter="iphoneAdapter"] body{
   padding-bottom: 114px;
 }

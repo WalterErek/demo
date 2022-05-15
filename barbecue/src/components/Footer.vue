@@ -30,14 +30,9 @@ const onClear = () => {
     button-text="生成订单"
     @submit="onSubmit"
   >
-    <!-- <template #tip>
-      您有历史订单记录，是否恢复？
-      <span style="color: #1989fa" @click="onGetHistory">一键导入</span> &nbsp;
-      <span style="color: #e93030" @click="onClear">清空</span>
-    </template> -->
     <template #tip>
-      是否清空？
-      <span style="color: #1989fa" @click="onClear">清空</span>
+      <span style="color: #1989fa" @click="onGetHistory">一键导入历史订单</span> &nbsp;
+      <span style="color: #e93030" @click="onClear">清空</span>
     </template>
   </van-submit-bar>
 </template>
