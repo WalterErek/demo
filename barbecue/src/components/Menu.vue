@@ -39,7 +39,9 @@ const switchTab = (index: number) => {
 .van-stepper {
   text-align: right;
 }
-
+.menu {
+  padding: 0 16px;
+}
 .menu-item {
   display: flex;
   justify-content: space-between;
