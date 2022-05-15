@@ -22,7 +22,7 @@ const menuInfo = inject<MenuInfo>('menuInfo');
   <!-- 价格、总数量、取货码 -->
   <!-- 订单汇总 -->
   <div>
-    <van-row justify="space-between" align="center" style="margin: 0 -4px">
+    <van-row justify="space-between" align="center">
       <van-col span="8" class="txt-c"> 订单总价<div class="txt-c info-important" :style="{ color: '#1989fa' }">￥{{menuInfo!.menuPrice}}</div> </van-col>
 
       <van-col span="8" class="txt-c"> 总数量<div class="txt-c info-important">{{menuInfo!.totalCount}}</div> </van-col>
