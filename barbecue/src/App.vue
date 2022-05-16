@@ -108,7 +108,7 @@ const handleHistory = () => {
 };
 
 const handleClear = () => {
-  clearHistory();
+  // clearHistory();
   for (let item of menu.data) {
     const { list } = item;
     list.forEach((subitem: MenuListItem) => {

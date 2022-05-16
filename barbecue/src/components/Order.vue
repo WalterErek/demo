@@ -31,7 +31,7 @@ const onScreenshot = () => {
   <!-- 导航栏 -->
   <van-nav-bar
     title="订单详情"
-    left-text="返回"
+    left-text="修改订单"
     right-text="生成截图"
     left-arrow
     fixed
