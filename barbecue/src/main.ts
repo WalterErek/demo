@@ -18,7 +18,8 @@ import {
   Icon,
   Cell,
   Toast,
-  Overlay
+  Overlay,
+  Badge
 } from "vant";
 
 const app = createApp(App);
@@ -39,6 +40,7 @@ app
   .use(Icon)
   .use(Cell)
   .use(Toast)
-  .use(Overlay);
+  .use(Overlay)
+  .use(Badge);
 
 app.mount("#app");

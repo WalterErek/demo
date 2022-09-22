@@ -117,7 +117,7 @@ export const menuConfig = [{
     count: 0,
   },{
     name: '掌中宝',
-    price: 3,
+    price: 4,
     count: 0,
   },{
     name: '脆骨',
@@ -131,12 +131,22 @@ export const menuConfig = [{
 },{
   name: '素菜系列',
   list: [{
+    name: '大茄子',
+    price: 15,
+    count: 0,
+    badge: '上新',
+  },{
+    name: '香菜卷',
+    price: 2,
+    count: 0,
+    badge: '上新',
+  },{
     name: '年糕',
     price: 3,
     count: 0,
   },{
     name: '千叶豆腐',
-    price: 2,
+    price: 3,
     count: 0,
   },{
     name: '臭豆腐',
@@ -148,7 +158,7 @@ export const menuConfig = [{
     count: 0,
   },{
     name: '兰花干',
-    price: 2,
+    price: 3,
     count: 0,
   },{
     name: '香干',
@@ -172,7 +182,7 @@ export const menuConfig = [{
     count: 0,
   },{
     name: '素鸡',
-    price: 2,
+    price: 3,
     count: 0,
   },{
     name: '小馒头',
@@ -212,7 +222,7 @@ export const menuConfig = [{
     count: 0,
   },{
     name: '鱼豆腐',
-    price: 2,
+    price: 3,
     count: 0,
   }]
 }];
