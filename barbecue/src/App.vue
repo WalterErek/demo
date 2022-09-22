@@ -10,6 +10,7 @@ export interface MenuListItem {
   name: string;
   price: number;
   count: number;
+  badge?: string;
 }
 export interface MenuListItemWithIndex extends MenuListItem {
   index: number;

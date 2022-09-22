@@ -26,7 +26,13 @@ const switchTab = (index: number) => {
           v-for="(subitem, subindex) in item.list"
           :key="subitem.name"
         >
-          <div>{{ subitem.name }}</div>
+          <van-badge position="top-left">
+            <div>{{ subitem.name }}</div>
+            <template #content v-if="subitem.badge">
+              {{subitem.badge}}
+            </template>
+          </van-badge>
+          
           <div>单价：￥{{ subitem.price }}</div>
           <van-stepper v-model="subitem.count" theme="round" min="0" integer />
         </li>
